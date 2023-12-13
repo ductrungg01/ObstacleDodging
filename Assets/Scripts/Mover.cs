@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,35 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1;
-    
-    // Start is called before the first frame update
-    void Start()
+    private float xInput = 0, zInput = 0;
+    private Rigidbody rb;
+
+    private void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float xValue = moveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
-        float zValue = moveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
-        
-        transform.Translate(xValue, 0, zValue);
+        PlayerInput();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    private void MovePlayer()
+    {
+        Vector3 velo = new Vector3(xInput * moveSpeed * Time.deltaTime
+            , 0f
+            , zInput * moveSpeed * Time.deltaTime);
+        transform.Translate(velo);
+    }
+    
+    private void PlayerInput()
+    {
+        xInput = Input.GetAxis("Horizontal");
+        zInput = Input.GetAxis("Vertical");
     }
 }
