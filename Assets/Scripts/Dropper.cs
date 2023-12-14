@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dropper : MonoBehaviour
 {
-    [SerializeField] private float timeToAppear = 3f;
+    [SerializeField] private float timeToAppear = 2f;
     private bool dropped = false;
     
     private Rigidbody rb;
@@ -29,6 +29,7 @@ public class Dropper : MonoBehaviour
                 rb.useGravity = true;
                 mesh.enabled = true;
                 dropped = true;
+                this.gameObject.GetComponent<Dropper>().enabled = false;
             }
         }
     }
